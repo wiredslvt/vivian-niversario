@@ -5,156 +5,178 @@
 <title>Feliz Aniversário Vivian!</title>
 
 <style>
-    body{
-        margin:0;
-        height:100vh;
-        background:#a200ff;
-        color:white;
-        font-family: Arial, Helvetica, sans-serif;
-        overflow:hidden;
-    }
+body{
+ margin:0;
+ height:100vh;
+ background:#b300ff; /* roxo magenta */
+ color:white;
+ font-family: Arial, Helvetica, sans-serif;
+ overflow:hidden;
+}
 
-    .container{
-        position:relative;
-        width:100%;
-        height:100%;
-        display:flex;
-        flex-direction:column;
-        align-items:center;
-        justify-content:center;
-        text-align:center;
-        z-index:5;
-    }
+/* CONTEÚDO CENTRAL */
+.container{
+ position:relative;
+ width:100%;
+ height:100%;
+ display:flex;
+ flex-direction:column;
+ align-items:center;
+ justify-content:center;
+ text-align:center;
+ z-index:5;
+}
 
-    .menu button{
-        background:black;
-        color:white;
-        border:2px solid white;
-        padding:12px 25px;
-        margin:8px;
-        cursor:pointer;
-        font-size:18px;
-    }
-    .menu button:hover{
-        background:white;
-        color:black;
-    }
+/* BOTÕES ESTILO DVD */
+.menu button{
+ background:black;
+ color:white;
+ border:3px solid white;
+ padding:12px 28px;
+ margin:8px;
+ cursor:pointer;
+ font-size:20px;
+ font-weight:bold;
+ border-radius:8px;
+ box-shadow:0 0 10px white;
+}
+.menu button:hover{
+ background:white;
+ color:black;
+}
 
-    #mensagem{
-        margin-top:15px;
-        font-size:20px;
-    }
+#mensagem{
+ margin-top:15px;
+ font-size:22px;
+ font-weight:bold;
+}
 
-    .centro img{
-        width:270px;
-        max-width:80vw;
-    }
+/* IMAGEM CENTRAL */
+.centro img{
+ width:290px;
+ max-width:80vw;
+ border:4px solid white;
+ border-radius:12px;
+ box-shadow:0 0 20px black;
+}
 
-    .star{
-        position:fixed;
-        top:-20px;
-        color:white;
-        animation: fall linear infinite, blink 1.5s infinite alternate;
-        font-size:14px;
-        opacity:.8;
-        z-index:1;
-    }
+/* ESTRELAS CAINDO */
+.star{
+ position:fixed;
+ top:-20px;
+ color:white;
+ animation: fall linear infinite, blink 1.3s infinite alternate;
+ font-size:14px;
+ opacity:.9;
+ z-index:1;
+}
+@keyframes fall{
+ to{transform:translateY(110vh);}
+}
+@keyframes blink{
+ from{opacity:0.2;}
+ to{opacity:1;}
+}
 
-    @keyframes fall{
-        to{transform:translateY(110vh);}
-    }
-    @keyframes blink{
-        from{opacity:0.2;}
-        to{opacity:1;}
-    }
+/* IMAGENS PISCANDO NAS BORDAS */
+.blink-img{
+ position:fixed;
+ width:150px;
+ animation: piscar 1.5s infinite alternate;
+ z-index:3;
+ border:3px solid white;
+ border-radius:10px;
+}
 
-    .blink-img{
-        position:fixed;
-        width:140px;
-        animation: piscar 1.5s infinite alternate;
-        z-index:3;
-    }
-    .top-left{top:10px; left:10px;}
-    .top-right{top:10px; right:10px;}
-    .bottom-left{bottom:10px; left:10px;}
-    .bottom-right{bottom:10px; right:10px;}
+.top-left{top:10px; left:10px;}
+.top-right{top:10px; right:10px;}
+.bottom-left{bottom:10px; left:10px;}
+.bottom-right{bottom:10px; right:10px;}
 
-    @keyframes piscar{
-        from{opacity:0;}
-        to{opacity:1;}
-    }
+@keyframes piscar{
+ from{opacity:0;}
+ to{opacity:1;}
+}
 
-    .gif{
-        position:fixed;
-        top:50%;
-        transform:translateY(-50%);
-        width:170px;
-        animation: girar 7s linear infinite;
-        z-index:4;
-    }
-    .gif.left{left:5px;}
-    .gif.right{right:5px;}
+/* GIFS GIRANDO TIPO DVD */
+.gif{
+ position:fixed;
+ top:50%;
+ transform:translateY(-50%);
+ width:180px;
+ animation:girar 7s linear infinite;
+ z-index:4;
+}
+.gif.left{left:10px;}
+.gif.right{right:10px;}
 
-    @keyframes girar{
-        from{transform:translateY(-50%) rotate(0deg);}
-        to{transform:translateY(-50%) rotate(360deg);}
-    }
+@keyframes girar{
+ from{transform:translateY(-50%) rotate(0deg);}
+ to{transform:translateY(-50%) rotate(360deg);}
+}
 
-    .video-area{
-        position:fixed;
-        top:50%;
-        left:50%;
-        transform:translate(-50%,-50%);
-        z-index:2;
-        color:white;
-        font-weight:bold;
-        text-shadow: 0 0 5px black;
-    }
+/* LOCAL DO VÍDEO */
+.video-area{
+ position:fixed;
+ top:50%;
+ left:50%;
+ transform:translate(-50%,-50%);
+ z-index:2;
+ color:white;
+ font-weight:bold;
+ text-shadow:0 0 5px black;
+}
 </style>
 </head>
 
 <body>
 
+<!-- CRIAR AS ESTRELAS DINÂMICAS -->
 <script>
-for(let i=0;i<55;i++){
-    let s = document.createElement("div");
-    s.className="star";
-    s.innerHTML="✦";
-    s.style.left=Math.random()*100+"vw";
-    s.style.animationDuration= (4+Math.random()*6)+"s";
-    s.style.fontSize = (10+Math.random()*18)+"px";
-    document.body.appendChild(s);
+for(let i=0;i<60;i++){
+ let s=document.createElement("div");
+ s.className="star";
+ s.innerHTML="✦";
+ s.style.left=Math.random()*100+"vw";
+ s.style.animationDuration=(4+Math.random()*6)+"s";
+ s.style.fontSize=(10+Math.random()*20)+"px";
+ document.body.appendChild(s);
 }
 </script>
 
 <div class="container">
-    <div class="centro">
-        <img src="personagem.png" alt="Imagem central">
-    </div>
 
-    <div class="menu">
-        <button onclick="document.getElementById('mensagem').innerHTML='feliz aniversário minha amiga amadaaaaaaa!!!!!!'">VIVIAN</button>
-        <button onclick="document.getElementById('mensagem').innerHTML='achou que eu tinha esquecido né?'">vivian</button>
-    </div>
+ <div class="centro">
+  <img src="personagem.png" alt="Imagem central">
+ </div>
 
-    <div id="mensagem"></div>
+ <div class="menu">
+  <button onclick="document.getElementById('mensagem').innerHTML='feliz aniversário minha amiga amadaaaaaaa!!!!!!'">VIVIAN</button>
+
+  <button onclick="document.getElementById('mensagem').innerHTML='achou que eu tinha esquecido né?'">vivian</button>
+ </div>
+
+ <div id="mensagem"></div>
 </div>
 
+<!-- IMAGENS PISCANDO -->
 <img src="herois.jpg" class="blink-img top-left">
 <img src="herois.jpg" class="blink-img top-right">
 <img src="herois.jpg" class="blink-img bottom-left">
 <img src="herois.jpg" class="blink-img bottom-right">
 
+<!-- GIFS GIRANDO -->
 <div class="gif left">
-    <img src="mar.gif" style="width:100%;">
+ <img src="mar.gif" style="width:100%;">
 </div>
 
 <div class="gif right">
-    <img src="estrela.gif" style="width:100%;">
+ <img src="estrela.gif" style="width:100%;">
 </div>
 
+<!-- AQUI VOCÊ VAI INSERIR O VÍDEO -->
 <div class="video-area">
-    <!-- incluir vídeo -->
+ <!-- incluir vídeo -->
 </div>
 
 </body>
