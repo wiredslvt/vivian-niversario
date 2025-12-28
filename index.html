@@ -8,7 +8,7 @@
 body{
  margin:0;
  height:100vh;
- background:#b300ff; /* roxo magenta */
+ background:#b300ff;
  color:white;
  font-family: Arial, Helvetica, sans-serif;
  overflow:hidden;
@@ -27,7 +27,7 @@ body{
  z-index:5;
 }
 
-/* BOTÕES ESTILO DVD */
+/* BOTÕES ESTILO DVD + GIRO */
 .menu button{
  background:black;
  color:white;
@@ -37,12 +37,20 @@ body{
  cursor:pointer;
  font-size:20px;
  font-weight:bold;
- border-radius:8px;
+ border-radius:50px;
  box-shadow:0 0 10px white;
+ animation: dvdspin 6s linear infinite;
 }
+
 .menu button:hover{
  background:white;
  color:black;
+ box-shadow:0 0 20px yellow;
+}
+
+@keyframes dvdspin{
+ from{transform:rotate(0deg);}
+ to{transform:rotate(360deg);}
 }
 
 #mensagem{
@@ -98,7 +106,7 @@ body{
  to{opacity:1;}
 }
 
-/* GIFS GIRANDO TIPO DVD */
+/* GIFS GIRANDO */
 .gif{
  position:fixed;
  top:50%;
@@ -126,12 +134,53 @@ body{
  font-weight:bold;
  text-shadow:0 0 5px black;
 }
+
+/* ÁREA DOS RECADOS */
+.recados-box{
+ position:fixed;
+ bottom:8px;
+ left:50%;
+ transform:translateX(-50%);
+ width:90%;
+ max-width:500px;
+ background:rgba(0,0,0,.4);
+ border:2px solid white;
+ border-radius:12px;
+ padding:10px;
+ z-index:10;
+}
+
+.recados-box input,
+.recados-box textarea{
+ width:100%;
+ border:none;
+ padding:6px;
+ border-radius:6px;
+ margin-top:4px;
+}
+
+.recados-box button{
+ margin-top:6px;
+ width:100%;
+ padding:8px;
+ font-weight:bold;
+ cursor:pointer;
+ border-radius:10px;
+}
+
+/* LISTA DE RECADOS */
+#listaRecados{
+ max-height:120px;
+ overflow-y:auto;
+ font-size:14px;
+ margin-top:10px;
+}
 </style>
 </head>
 
 <body>
 
-<!-- CRIAR AS ESTRELAS DINÂMICAS -->
+<!-- ESTRELAS -->
 <script>
 for(let i=0;i<60;i++){
  let s=document.createElement("div");
@@ -174,10 +223,57 @@ for(let i=0;i<60;i++){
  <img src="estrela.gif" style="width:100%;">
 </div>
 
-<!-- AQUI VOCÊ VAI INSERIR O VÍDEO -->
+<!-- VÍDEO -->
 <div class="video-area">
  <!-- incluir vídeo -->
 </div>
 
+
+<!-- RECADOS (SALVA NO NAVEGADOR DO USUÁRIO) -->
+<div class="recados-box">
+ <strong>Deixe seu recado 💜</strong>
+
+ <input id="nome" placeholder="Seu nome">
+ <textarea id="recado" rows="2" placeholder="Escreva aqui..."></textarea>
+
+ <button onclick="salvarRecado()">Enviar</button>
+
+ <div id="listaRecados"></div>
+</div>
+
+<script>
+function salvarRecado(){
+ let nome=document.getElementById('nome').value.trim();
+ let recado=document.getElementById('recado').value.trim();
+
+ if(!nome || !recado) return alert('Preencha tudo 🙂');
+
+ let lista=JSON.parse(localStorage.getItem('recadosVivian')||'[]');
+
+ lista.push({nome,recado});
+
+ localStorage.setItem('recadosVivian',JSON.stringify(lista));
+
+ mostrarRecados();
+
+ document.getElementById('recado').value="";
+}
+
+function mostrarRecados(){
+ let lista=JSON.parse(localStorage.getItem('recadosVivian')||'[]');
+ let div=document.getElementById('listaRecados');
+ div.innerHTML="";
+
+ lista.forEach(r=>{
+  let p=document.createElement('p');
+  p.innerHTML=`<b>${r.nome}</b>: ${r.recado}`;
+  div.appendChild(p);
+ });
+}
+
+mostrarRecados();
+</script>
+
 </body>
 </html>
+
