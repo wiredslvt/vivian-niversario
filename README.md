@@ -27,32 +27,6 @@ body{
  z-index:5;
 }
 
-/* BOTÕES ESTILO DVD + GIRO */
-.menu button{
- background:black;
- color:white;
- border:3px solid white;
- padding:12px 28px;
- margin:8px;
- cursor:pointer;
- font-size:20px;
- font-weight:bold;
- border-radius:50px;
- box-shadow:0 0 10px white;
- animation: dvdspin 6s linear infinite;
-}
-
-.menu button:hover{
- background:white;
- color:black;
- box-shadow:0 0 20px yellow;
-}
-
-@keyframes dvdspin{
- from{transform:rotate(0deg);}
- to{transform:rotate(360deg);}
-}
-
 #mensagem{
  margin-top:15px;
  font-size:22px;
@@ -135,7 +109,33 @@ body{
  text-shadow:0 0 5px black;
 }
 
-/* ÁREA DOS RECADOS */
+/* ===== BOTÕES DVD QUE QUICAM ===== */
+
+.dvd-btn{
+ position:fixed;
+ padding:14px 32px;
+ background:black;
+ border:3px solid white;
+ color:white;
+ font-weight:bold;
+ border-radius:16px;
+ box-shadow:0 0 15px white;
+ z-index:8;
+ cursor:pointer;
+ user-select:none;
+ transition:background 0.3s, box-shadow 0.3s;
+}
+
+.dvd-btn.small{
+ font-size:16px;
+ padding:10px 26px;
+}
+
+.dvd-btn:hover{
+ box-shadow:0 0 25px yellow;
+}
+
+/* ===== ÁREA DOS RECADOS ===== */
 .recados-box{
  position:fixed;
  bottom:8px;
@@ -199,13 +199,20 @@ for(let i=0;i<60;i++){
   <img src="personagem.png" alt="Imagem central">
  </div>
 
- <div class="menu">
-  <button onclick="document.getElementById('mensagem').innerHTML='feliz aniversário minha amiga amadaaaaaaa!!!!!!'">VIVIAN</button>
-
-  <button onclick="document.getElementById('mensagem').innerHTML='achou que eu tinha esquecido né?'">vivian</button>
- </div>
-
+ <!-- MENSAGEM -->
  <div id="mensagem"></div>
+
+</div>
+
+<!-- BOTÕES DVD -->
+<div id="dvd-vivian" class="dvd-btn"
+ onclick="document.getElementById('mensagem').innerHTML='feliz aniversário minha amiga amadaaaaaaa!!!!!!'">
+ VIVIAN
+</div>
+
+<div id="dvd-vivian2" class="dvd-btn small"
+ onclick="document.getElementById('mensagem').innerHTML='achou que eu tinha esquecido né?'">
+ vivian
 </div>
 
 <!-- IMAGENS PISCANDO -->
@@ -228,8 +235,7 @@ for(let i=0;i<60;i++){
  <!-- incluir vídeo -->
 </div>
 
-
-<!-- RECADOS (SALVA NO NAVEGADOR DO USUÁRIO) -->
+<!-- RECADOS -->
 <div class="recados-box">
  <strong>Deixe seu recado 💜</strong>
 
@@ -242,6 +248,55 @@ for(let i=0;i<60;i++){
 </div>
 
 <script>
+/* ====== DVD BOUNCE COM COR HOLOGRÁFICA ====== */
+
+function randomGradient(){
+  const c1 = `hsl(${Math.random()*360},100%,60%)`;
+  const c2 = `hsl(${Math.random()*360},100%,70%)`;
+  return `linear-gradient(135deg, ${c1}, ${c2})`;
+}
+
+function dvdBounce(elementId, speedX, speedY){
+ let el = document.getElementById(elementId);
+
+ let x = Math.random()* (window.innerWidth-150);
+ let y = Math.random()* (window.innerHeight-80);
+
+ function move(){
+   x += speedX;
+   y += speedY;
+
+   let hit = false;
+
+   if(x <= 0 || x + el.offsetWidth >= window.innerWidth){
+     speedX = -speedX;
+     hit = true;
+   }
+
+   if(y <= 0 || y + el.offsetHeight >= window.innerHeight){
+     speedY = -speedY;
+     hit = true;
+   }
+
+   if(hit){
+     el.style.background = randomGradient();
+     el.style.boxShadow = "0 0 25px white";
+   }
+
+   el.style.left = x + "px";
+   el.style.top = y + "px";
+
+   requestAnimationFrame(move);
+ }
+
+ move();
+}
+
+dvdBounce("dvd-vivian", 2.3, 1.9);
+dvdBounce("dvd-vivian2", -1.7, 2.5);
+
+/* ====== RECADOS LOCAL (visível só no navegador de quem envia) ====== */
+
 function salvarRecado(){
  let nome=document.getElementById('nome').value.trim();
  let recado=document.getElementById('recado').value.trim();
@@ -276,4 +331,3 @@ mostrarRecados();
 
 </body>
 </html>
-
